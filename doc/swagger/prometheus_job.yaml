@@ -1,0 +1,163 @@
+swagger: "2.0"
+info:
+  description: "Config API"
+  version: "v1"
+  title: "Swagger Config"
+  contact:
+    name: "hezhangjian"
+    email: "shoothzj@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:31001"
+basePath: "/v1/prometheus/"
+schemes:
+  - "http"
+parameters:
+  job:
+    in: "path"
+    name: "job"
+    description: "job name"
+    required: true
+    type: string
+    pattern: "[a-fA-F]{1,31}"
+paths:
+  /jobs:
+    post:
+      tags:
+        - "job"
+      summary: "add job"
+      description: "add job"
+      operationId: "AddJob"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "CreateJobBody"
+          description: "Job Body"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateJobReq"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/CreateJobResp"
+        "405":
+          description: "Invalid input"
+  /jobs/{job}:
+    delete:
+      tags:
+        - "job"
+      summary: "delete job"
+      description: "delete job according to job name"
+      operationId: "DeleteJob"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - $ref: '#/parameters/job'
+      responses:
+        "204":
+          description: "No Content"
+        "405":
+          description: "Invalid input"
+definitions:
+  CreateJobReq:
+    type: "object"
+    properties:
+      job:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "job name"
+      tls_config:
+        $ref: "#/definitions/TlsConfig"
+      metric_path:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "metric path"
+      sd_configs:
+        $ref: "#/definitions/SdConfigs"
+  SdConfigs:
+    type: "object"
+    properties:
+      sd_type:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "sd type"
+      static_configs:
+        $ref: "#/definitions/StaticSdConfigs"
+      file_sd_configs:
+        $ref: "#/definitions/FileSdConfigs"
+      dns_sd_configs:
+        $ref: "#/definitions/DnsSdConfigs"
+  StaticSdConfigs:
+    type: "object"
+    properties:
+      targets:
+        type: "array"
+        items:
+          type: "string"
+  FileSdConfigs:
+    type: "array"
+    items:
+      $ref: "#/definitions/FileSdConfig"
+  FileSdConfig:
+    type: "object"
+    properties:
+      files:
+        type: "array"
+        items:
+          type: "string"
+      refresh_interval:
+        type: "string"
+  DnsSdConfigs:
+    type: "array"
+    items:
+      $ref: "#/definitions/DnsSdConfig"
+  DnsSdConfig:
+    type: "object"
+    properties:
+      names:
+        type: "array"
+        items:
+          type: "string"
+      type:
+        type: "string"
+      port:
+        type: "number"
+        format: "int32"
+      refresh_interval:
+        type: "string"
+  TlsConfig:
+    type: "object"
+    properties:
+      ca_file:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "ca file path"
+      cert_file:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "cert file path"
+      key_file:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "key file path"
+  CreateJobResp:
+    type: "object"
+    properties:
+      job:
+        type: "string"
+        minLength: 4
+        maxLength: 32
+        description: "job name"

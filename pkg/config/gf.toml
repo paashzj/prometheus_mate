@@ -1,0 +1,9 @@
+# HTTP Server.
+[server]
+	address        = "0.0.0.0:31001"
+# Logger configurations.
+[logger]
+    path   = "/opt/sh/prometheus/"
+    file   = "prom_mate_running.log"
+    level  = "all"
+    stdout = false
