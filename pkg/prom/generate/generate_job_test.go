@@ -7,7 +7,16 @@ import (
 	"testing"
 )
 
-func TestConvJob(t *testing.T) {
+func TestConvStaticJob(t *testing.T) {
+	staticSdConfig := model.StaticSdConfig{}
+	staticSdConfig.Targets = []string{"localhost:9090"}
+	result := convStaticJob(staticSdConfig)
+	expect := `       - targets: ["localhost:9090"]
+`
+	assert.Equal(t, expect, result)
+}
+
+func TestConvFileJob(t *testing.T) {
 	jobReq := model.CreateJobReq{}
 	jobReq.Job = "file_job"
 	tlsConfig := &model.TlsConfig{}

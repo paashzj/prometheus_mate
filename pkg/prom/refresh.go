@@ -39,14 +39,21 @@ func startOrReloadProm() {
 func startProm() {
 	err := generatePromFile()
 	if err != nil {
-		glog.Error("generate prom config file failed", err)
+		glog.Error("generate prom config file failed ", err)
+		return
 	}
-	gproc.ShellRun("bash -x " + path.PromStartScript)
+	err = gproc.ShellRun("bash -x " + path.PromStartScript)
+	glog.Error("run start prom scripts failed ", err)
 }
 
 func restartProm() {
-	generatePromFile()
-	gproc.ShellRun("bash -x " + path.PromReStartScript)
+	err := generatePromFile()
+	if err != nil {
+		glog.Error("generate prom config file failed ", err)
+		return
+	}
+	err = gproc.ShellRun("bash -x " + path.PromReStartScript)
+	glog.Error("run restart prom scripts failed ", err)
 }
 
 func generatePromFile() (err error) {

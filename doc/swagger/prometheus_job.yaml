@@ -103,6 +103,13 @@ definitions:
       targets:
         type: "array"
         items:
+          $ref: "#/definitions/StaticSdConfig"
+  StaticSdConfig:
+    type: "object"
+    properties:
+      targets:
+        type: "array"
+        items:
           type: "string"
   FileSdConfigs:
     type: "array"

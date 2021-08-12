@@ -12,6 +12,7 @@ func init() {
 	s.Group("/v1/prometheus/", func(group *ghttp.RouterGroup) {
 		group.Group("/jobs", func(group *ghttp.RouterGroup) {
 			group.POST("/", api.AddJob)
+			group.DELETE("/{job}", api.DelJob)
 		})
 	})
 }
