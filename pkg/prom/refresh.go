@@ -24,7 +24,7 @@ func Start() {
 }
 
 func startOrReloadProm() {
-	exists, err := util.ProccessExists(path.PromHome + "/prometheus")
+	exists, err := util.ProcessExists(path.PromHome + "/prometheus")
 	if err != nil {
 		glog.Error("unknown prometheus exists ", err)
 		return

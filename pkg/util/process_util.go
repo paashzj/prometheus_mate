@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func ProccessExists(processName string) (bool, error) {
+func ProcessExists(processName string) (bool, error) {
 	result := false
 	fileInfos, err := ioutil.ReadDir("/proc")
 	if err != nil {

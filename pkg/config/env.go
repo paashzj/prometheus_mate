@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	GLOBAL_SCRAPE_INTERVAL     = os.Getenv("GLOBAL_SCRAPE_INTERVAL")
-	GLOBAL_EVALUATION_INTERVAL = os.Getenv("GLOBAL_EVALUATION_INTERVAL")
-	GLOBAL_SCRAPE_TIMEOUT      = os.Getenv("GLOBAL_SCRAPE_TIMEOUT")
+	GlobalScrapeInterval     = os.Getenv("GLOBAL_SCRAPE_INTERVAL")
+	GlobalEvaluationInterval = os.Getenv("GLOBAL_EVALUATION_INTERVAL")
+	GlobalScrapeTimeout      = os.Getenv("GLOBAL_SCRAPE_TIMEOUT")
 )

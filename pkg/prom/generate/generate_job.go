@@ -19,20 +19,20 @@ import (
 func ConvProm() string {
 	var sb strings.Builder
 	sb.WriteString("global:\n")
-	if config.GLOBAL_SCRAPE_INTERVAL == "" {
+	if config.GlobalScrapeInterval == "" {
 		sb.WriteString("  scrape_interval: 15s\n")
 	} else {
-		sb.WriteString("  scrape_interval: " + config.GLOBAL_SCRAPE_INTERVAL + "\n")
+		sb.WriteString("  scrape_interval: " + config.GlobalScrapeInterval + "\n")
 	}
-	if config.GLOBAL_EVALUATION_INTERVAL == "" {
+	if config.GlobalEvaluationInterval == "" {
 		sb.WriteString("  evaluation_interval: 15s\n")
 	} else {
-		sb.WriteString("  evaluation_interval: " + config.GLOBAL_EVALUATION_INTERVAL + "\n")
+		sb.WriteString("  evaluation_interval: " + config.GlobalEvaluationInterval + "\n")
 	}
-	if config.GLOBAL_SCRAPE_TIMEOUT == "" {
+	if config.GlobalScrapeTimeout == "" {
 		sb.WriteString("  scrape_timeout: 10s\n")
 	} else {
-		sb.WriteString("  scrape_timeout: " + config.GLOBAL_SCRAPE_TIMEOUT + "\n")
+		sb.WriteString("  scrape_timeout: " + config.GlobalScrapeTimeout + "\n")
 	}
 	sb.WriteString("scrape_configs:\n")
 	sb.WriteString(convPromSelfJob())
