@@ -85,6 +85,9 @@ func convJobFromEnvService(service string, env string, port int) string {
 	singleSdJob := model.SingleSdJob{}
 	singleSdJob.Job = service
 	singleSdJob.SdType = os.Getenv(env + "_TYPE")
+	if singleSdJob.SdType == "" {
+		return ""
+	}
 	sslEnable := os.Getenv(env + "_SSL")
 	if sslEnable != "" {
 		singleSdJob.TlsConfig = &model.TlsConfig{}
