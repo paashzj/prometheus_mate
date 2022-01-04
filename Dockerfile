@@ -17,4 +17,4 @@ COPY docker-build /opt/sh/prometheus/mate
 
 COPY --from=build /opt/sh/compile/pkg/prom_mate /opt/sh/prometheus/mate/prom_mate
 
-CMD ["/usr/local/bin/dumb-init", "bash", "-vx", "/opt/sh/prometheus/mate/scripts/start.sh"]
+CMD ["/usr/bin/dumb-init", "bash", "-vx", "/opt/sh/prometheus/mate/scripts/start.sh"]
