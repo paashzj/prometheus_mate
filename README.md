@@ -17,6 +17,7 @@ type为dns的时候使用，域名
 - PULSAR_PROXY
 - MYSQL
 - REDIS
+- COREDNS
 ## 选型框架
 GoFrame
 

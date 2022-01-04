@@ -78,6 +78,10 @@ func convJobFromEnv() string {
 	sb.WriteString(convJobFromEnvService("pulsar_proxy", "PULSAR_PROXY", 8080))
 	sb.WriteString(convJobFromEnvService("mysql", "MYSQL", 9104))
 	sb.WriteString(convJobFromEnvService("redis", "REDIS", 9121))
+	// k8s component
+	sb.WriteString(convJobFromEnvService("coredns", "COREDNS", 9153))
+	sb.WriteString(convJobFromEnvService("kubelet", "KUBELET", 10250))
+	sb.WriteString(convJobFromEnvService("kube-proxy", "KUBE_PROXY", 10249))
 	return sb.String()
 }
 
