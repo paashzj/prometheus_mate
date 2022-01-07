@@ -63,3 +63,29 @@ func TestConvDnsJob(t *testing.T) {
 `
 	assert.Equal(t, expect, result)
 }
+
+func TestConvKeepMetricsJob(t *testing.T) {
+	jobReq := model.CreateJobReq{}
+	jobReq.Job = "keep_metrics_job"
+	jobReq.KeepMetrics = "request_total|response_total"
+	dnsSdConfig := model.DnsSdConfig{}
+	dnsSdConfig.Names = []string{}
+	dnsSdConfig.Type_ = "A"
+	dnsSdConfig.Port = 8080
+	dnsSdConfig.RefreshInterval = "10s"
+	expect := `  - job_name: "keep_metrics_job"
+    dns_sd_configs:
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: (request_total|response_total)
+        action: keep
+`
+	sdConfigs := &model.SdConfigs{}
+	sdConfigs.SdType = constant.SdDns
+	//sdConfigs.DnsSdConfigs = make([]model.DnsSdConfig, 1)
+
+	//sdConfigs.FileSdConfigs[0] = fileSdConfig
+	jobReq.SdConfigs = sdConfigs
+	result := convJob(jobReq)
+	assert.Equal(t, expect, result)
+}

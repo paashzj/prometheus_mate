@@ -109,6 +109,7 @@ func convJobFromEnvService(service string, env string, port int) string {
 		singleSdJob.DnsSdConfig.Port = port
 		singleSdJob.DnsSdConfig.RefreshInterval = "10s"
 	}
+	singleSdJob.KeepMetrics = os.Getenv(env + "_KEEP_METRICS")
 	return convJob(singleSdJob.Conv2Req())
 }
 
@@ -134,6 +135,12 @@ func convJob(req model.CreateJobReq) string {
 	}
 	if req.MetricPath != "" {
 		sb.WriteString("    metrics_path: " + req.MetricPath + "\n")
+	}
+	if req.KeepMetrics != "" {
+		sb.WriteString("    metric_relabel_configs:" + "\n")
+		sb.WriteString("      - source_labels: [__name__]" + "\n")
+		sb.WriteString("        regex: (" + req.KeepMetrics + ")" + "\n")
+		sb.WriteString("        action: keep" + "\n")
 	}
 	return sb.String()
 }

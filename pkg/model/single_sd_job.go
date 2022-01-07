@@ -14,6 +14,7 @@ type SingleSdJob struct {
 	StaticSdConfig StaticSdConfig
 	FileSdConfig   FileSdConfig
 	DnsSdConfig    DnsSdConfig
+	KeepMetrics    string
 }
 
 func (s SingleSdJob) Conv2Req() CreateJobReq {

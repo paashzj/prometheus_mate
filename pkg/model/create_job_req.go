@@ -11,4 +11,6 @@ type CreateJobReq struct {
 	MetricPath string `json:"metric_path,omitempty"`
 
 	SdConfigs *SdConfigs `json:"sd_configs,omitempty"`
+
+	KeepMetrics string `json:"keep_metrics,omitempty"`
 }
