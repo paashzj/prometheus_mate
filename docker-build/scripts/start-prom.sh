@@ -10,5 +10,5 @@ if [ $STORAGE_TSDB_RETENTION_SIZE ]; then
 else
     PROM_PARAM="$PROM_PARAM --storage.tsdb.retention.size=5GB"
 fi
-
-nohup $PROM_HOME/prometheus $PROM_PARAM --config.file=$PROM_HOME/prometheus.yml >$PROM_HOME/prometheus.log 2>$PROM_HOME/prometheus_error.log &
+mkdir $PROM_HOME/logs
+nohup $PROM_HOME/prometheus $PROM_PARAM --config.file=$PROM_HOME/prometheus.yml >>$PROM_HOME/logs/prometheus.stdout.log 2>>$PROM_HOME/logs/prometheus.stderr.log &

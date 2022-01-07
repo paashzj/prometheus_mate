@@ -36,5 +36,6 @@ func (s SingleSdJob) Conv2Req() CreateJobReq {
 		req.SdConfigs.DnsSdConfigs = make([]DnsSdConfig, 1)
 		req.SdConfigs.DnsSdConfigs[0] = s.DnsSdConfig
 	}
+	req.KeepMetrics = s.KeepMetrics
 	return req
 }

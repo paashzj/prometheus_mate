@@ -2,7 +2,7 @@
 ## 环境变量举例
 ### 添加coredns，只保留一个指标
 ```bash
--e COREDNS_TYPE=static -e COREDNS_HOSTS=127.0.0.1 COREDNS_KEEP_METRICS=coredns_dns_requests_total
+-e COREDNS_TYPE=static -e COREDNS_HOSTS=127.0.0.1 -e COREDNS_KEEP_METRICS=coredns_dns_requests_total
 ```
 ## motivation
 Prometheus原生只能通过修改配置文件的方式来重新加载，有的时候非常不方便，本工程通过开发`HTTP` API，来简化上述的流程。
