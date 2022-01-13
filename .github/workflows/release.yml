@@ -30,3 +30,30 @@ jobs:
           push: true
           tags: ttbb/prometheus:mate
           platforms: linux/amd64,linux/arm64
+      - name: Save Docker Images
+        run: docker pull ttbb/prometheus:mate;docker save ttbb/prometheus:mate -o prometheus-mate.tar.gz
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true
+          tag_name: latest_docker_image
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+
+      - name: Tag release
+        uses: tvdias/github-tagger@v0.0.1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          tag: latest_docker_image
+
+      # Creates the new release with the binary as a release asset.
+      # If the previous Action was skipped, then this keeps the same tag as the
+      # previous release.
+      - name: Create new release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: "Latest docker image"
+          name: "latest docker image"
+          tag_name: latest_docker_image
+          files: prometheus-mate.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
