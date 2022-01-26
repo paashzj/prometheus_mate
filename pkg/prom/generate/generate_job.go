@@ -19,6 +19,7 @@ package generate
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gogf/gf/util/gconv"
 	"io/fs"
 	"io/ioutil"
@@ -28,6 +29,7 @@ import (
 	"prometheus_mate/pkg/constant"
 	"prometheus_mate/pkg/model"
 	"prometheus_mate/pkg/path"
+	"strconv"
 	"strings"
 )
 
@@ -88,17 +90,19 @@ func convPromSelfJob() string {
 }
 
 func convJobFromEnv() string {
+	return autoConvJobFromEnv()
+}
+
+func autoConvJobFromEnv() string {
+	allEnv := os.Environ()
 	var sb strings.Builder
-	sb.WriteString(convJobFromEnvService("zookeeper", "ZOOKEEPER", 7000))
-	sb.WriteString(convJobFromEnvService("bookkeeper", "BOOKKEEPER", 8080))
-	sb.WriteString(convJobFromEnvService("pulsar", "PULSAR", 8080))
-	sb.WriteString(convJobFromEnvService("pulsar_proxy", "PULSAR_PROXY", 8080))
-	sb.WriteString(convJobFromEnvService("mysql", "MYSQL", 9104))
-	sb.WriteString(convJobFromEnvService("redis", "REDIS", 9121))
-	// k8s component
-	sb.WriteString(convJobFromEnvService("coredns", "COREDNS", 9153))
-	sb.WriteString(convJobFromEnvService("kubelet", "KUBELET", 10250))
-	sb.WriteString(convJobFromEnvService("kube-proxy", "KUBE_PROXY", 10249))
+	for _, env := range allEnv {
+		if strings.HasSuffix(env, "_TYPE") {
+			split := strings.Split(env, "_TYPE")
+			service := split[0]
+			sb.WriteString(convJobFromEnvService(service, service, getServicePort(service)))
+		}
+	}
 	return sb.String()
 }
 
@@ -219,4 +223,38 @@ func convDnsJob(config model.DnsSdConfig) string {
 	sb.WriteString("        port: " + gconv.String(config.Port) + "\n")
 	sb.WriteString("        refresh_interval: 10s\n")
 	return sb.String()
+}
+
+func getServicePort(service string) int {
+	port := os.Getenv(service + "_PORT")
+	if port == "" {
+		switch service {
+		case "ZOOKEEPER":
+			return 7000
+		case "PULSAR":
+			return 8080
+		case "PULSAR_PROXY":
+			return 8080
+		case "BOOKKEEPER":
+			return 8080
+		case "MYSQL":
+			return 9104
+		case "REDIS":
+			return 9121
+		case "COREDNS":
+			return 9153
+		case "KUBELET":
+			return 10250
+		case "KUBE_PROXY":
+			return 10249
+		default:
+			return 8080
+		}
+	}
+	atoi, err := strconv.Atoi(port)
+	if err != nil {
+		_ = fmt.Errorf("service %s port %s get from env parse int failed, use defualt port. error: %s", service, port, err)
+		return 8080
+	}
+	return atoi
 }
