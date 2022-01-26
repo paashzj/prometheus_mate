@@ -90,10 +90,6 @@ func convPromSelfJob() string {
 }
 
 func convJobFromEnv() string {
-	return autoConvJobFromEnv()
-}
-
-func autoConvJobFromEnv() string {
 	allEnv := os.Environ()
 	var sb strings.Builder
 	for _, env := range allEnv {
