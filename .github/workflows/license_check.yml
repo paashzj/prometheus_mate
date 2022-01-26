@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -17,6 +16,25 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+name: "license check"
 
-pid=`ps -ef|grep $PROM_HOME/prometheus|grep -v grep|awk '{print $2}'`
-kill -HUP $pid
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  license-check:
+    name: License Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check license header
+        uses: apache/skywalking-eyes@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config: .licenserc.yaml

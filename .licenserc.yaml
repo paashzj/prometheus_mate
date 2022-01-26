@@ -1,4 +1,3 @@
-#!/bin/bash
 #
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
@@ -18,5 +17,11 @@
 # under the License.
 #
 
-pid=`ps -ef|grep $PROM_HOME/prometheus|grep -v grep|awk '{print $2}'`
-kill -HUP $pid
+header:
+  license:
+    spdx-id: Apache-2.0
+    copyright-owner: Apache Software Foundation
+  paths-ignore:
+    - '**/*.md'
+    - 'LICENSE'
+    - '.gitignore'
