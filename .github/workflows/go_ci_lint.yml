@@ -16,6 +16,7 @@
 # specific language governing permissions and limitations
 # under the License.
 #
+
 name: go ci Lint
 on:
   pull_request:
@@ -31,4 +32,4 @@ jobs:
         uses: golangci/golangci-lint-action@v2
         with:
           version: v1.29
-          args: --timeout 3m0s --disable ineffassign,deadcode,unused,staticcheck
+          args: --timeout 3m0s

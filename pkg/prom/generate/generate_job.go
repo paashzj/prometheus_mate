@@ -55,7 +55,7 @@ func ConvProm() string {
 	sb.WriteString(convPromSelfJob())
 	sb.WriteString(convJobFromEnv())
 	// iterate the job
-	filepath.Walk(path.PromJobs, func(path string, info fs.FileInfo, err error) error {
+	_ = filepath.Walk(path.PromJobs, func(path string, info fs.FileInfo, err error) error {
 		if info.IsDir() {
 			return nil
 		}

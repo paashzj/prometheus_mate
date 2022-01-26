@@ -25,3 +25,5 @@ header:
     - '**/*.md'
     - 'LICENSE'
     - '.gitignore'
+    - '**/go.mod'
+    - '**/go.sum'
