@@ -19,6 +19,7 @@ package generate
 
 import (
 	"github.com/stretchr/testify/assert"
+	"os"
 	"prometheus_mate/pkg/constant"
 	"prometheus_mate/pkg/model"
 	"testing"
@@ -105,4 +106,14 @@ func TestConvKeepMetricsJob(t *testing.T) {
 	jobReq.SdConfigs = sdConfigs
 	result := convJob(jobReq)
 	assert.Equal(t, expect, result)
+}
+
+func TestConvJobFromEnv(t *testing.T) {
+	expectation := "  - job_name: \"PULSAR\"\n    static_configs:\n       - targets: [\"localhost:8080\"]\n"
+	err := os.Setenv("PULSAR_TYPE", "static")
+	assert.Nil(t, err)
+	err = os.Setenv("PULSAR_HOSTS", "localhost:8080")
+	assert.Nil(t, err)
+	job := convJobFromEnv()
+	assert.Equal(t, expectation, job)
 }
