@@ -93,8 +93,10 @@ func convJobFromEnv() string {
 	allEnv := os.Environ()
 	var sb strings.Builder
 	for _, env := range allEnv {
-		if strings.HasSuffix(env, "_TYPE") {
-			split := strings.Split(env, "_TYPE")
+		split := strings.Split(env, "=")
+		key := split[0]
+		if strings.HasSuffix(key, "_TYPE") {
+			split := strings.Split(key, "_TYPE")
 			service := split[0]
 			sb.WriteString(convJobFromEnvService(service, service, getServicePort(service)))
 		}
