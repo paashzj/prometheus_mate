@@ -9,16 +9,18 @@ Prometheus原生只能通过修改配置文件的方式来重新加载，有的�
 ## fast config from env
 ### env
 #### ${prefix}_TYPE
+#### ${prefix}_PORT
+config the port, some famous service has default port, see below
 #### ${prefix}_METRICS_PATH
-http请求的PATH
+config the metrics path
 #### ${prefix}_KEEP_METRICS
-白名单metrics列表
+metrics white lists
 #### ${prefix}_SSL
 #### ${prefix}_HOSTS
 type为static的时候使用，hosts
 #### ${prefix}_DOMAINS
 type为dns的时候使用，域名
-### support env prefix
+### support famous port
 - ZOOKEEPER
 - BOOKKEEPER
 - PULSAR
