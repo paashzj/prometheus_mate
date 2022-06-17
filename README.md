@@ -1,4 +1,6 @@
 # prometheus_mate
+## version
+- prometheus 2.36.1
 ## 环境变量举例
 ### 添加coredns，只保留一个指标
 ```bash
