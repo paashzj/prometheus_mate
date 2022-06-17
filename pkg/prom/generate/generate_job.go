@@ -128,6 +128,7 @@ func convJobFromEnvService(service string, env string, port int) string {
 		singleSdJob.DnsSdConfig.Port = port
 		singleSdJob.DnsSdConfig.RefreshInterval = "10s"
 	}
+	singleSdJob.KeepMetrics = os.Getenv(env + "_METRICS_PATH")
 	singleSdJob.KeepMetrics = os.Getenv(env + "_KEEP_METRICS")
 	return convJob(singleSdJob.Conv2Req())
 }
